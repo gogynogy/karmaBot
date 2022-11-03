@@ -1,9 +1,8 @@
 from aiogram import Bot, Dispatcher, types
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
-from aiogram.dispatcher import FSMContext
-from aiogram.types import InlineKeyboardMarkup, message
 from aiogram.utils import executor
 from SQLBD import SQL
+from config import BOT_TOKEN, good_words
 
 bot = Bot(token=BOT_TOKEN)
 
