@@ -1,25 +1,15 @@
-from aiogram import Bot, Dispatcher, types
-from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.utils import executor
-from SQLBD import SQL
-from config import BOT_TOKEN, good_words
 
-bot = Bot(token=BOT_TOKEN)
+from hendlers import dp
+from utils.notify_admins import on_start_up_notify
+from utils.setBotCommands import set_default_commands
 
-dp = Dispatcher(bot, storage=MemoryStorage())
 
-@dp.message_handler()
-async def get_message(message: types.Message):
-    print(len(message.text))
-    message_split = message.text.split(" ")
-    for i in message_split:
-        if i.startswith("@"):
-            await bot.send_message(message.chat.id, i)
-        elif i in good_words:
-            await bot.send_message(message.chat.id, i)
-
+async def on_startup(dp):
+    await on_start_up_notify(dp)
+    await set_default_commands(dp)
+    print("бот запущен")
 
 
 if __name__ == '__main__':
-    executor.start_polling(dispatcher=dp,
-                           skip_updates=True)
+    executor.start_polling(dispatcher=dp, on_startup=on_startup, skip_updates=True)
