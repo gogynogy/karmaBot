@@ -4,16 +4,10 @@ from aiogram.dispatcher import FSMContext
 from aiogram.types import InlineKeyboardMarkup, message
 from aiogram.utils import executor
 from SQLBD import SQL
-from config import BOT_TOKEN, good_words
-# from utils.nick import rate_limit
-
-
 
 bot = Bot(token=BOT_TOKEN)
 
 dp = Dispatcher(bot, storage=MemoryStorage())
-
-
 
 @dp.message_handler()
 async def get_message(message: types.Message):
