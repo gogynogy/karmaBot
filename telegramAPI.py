@@ -13,7 +13,7 @@ def start(update: Update, context: CallbackContext):
 
 def stop_shit(update: Update, context: CallbackContext):
     update.message.reply_text(
-        "Stop do this shit"
+        f"Stop do this shit\n{update.message.chat.full_name}"
     )
 
 updater.dispatcher.add_handler(CommandHandler('start', start))

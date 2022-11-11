@@ -1,5 +1,7 @@
 import sqlite3
 
+from utils.notify_admins import write_admin
+
 
 class SQL:
     def __init__(self):
@@ -10,12 +12,13 @@ class SQL:
     def checkDB(self):
         """проверяет наличие базы данных"""
         self.cursor.execute("""CREATE TABLE IF NOT EXISTS `karma_user` (
-            userid int NOT NULL,
-            chatid int NOT NULL,
-            karma int NULL DEFAULT 0,
-            user_name char(100) NULL,
-            user_nick char(50) NULL,
-            is_banned bool)""")
+            userid INT NOT NULL,
+            chatid INT NOT NULL,
+            karma INT NULL DEFAULT 0,
+            user_name TEXT,
+            user_nick TEXT,
+            is_banned TEXT NOT NULL DEFAULT False
+            )""")
         self.conn.commit()
         # self.cursor.execute("""CREATE TABLE IF NOT EXISTS `accounts` (
         #     Id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -51,6 +54,6 @@ class SQL:
                                     (user_id, ))
             return self.cursor.fetchone()
         except sqlite3.Error as error:
-            print("Ошибка при работе с SQLite change_karma", error)
+            write_admin(f"Ошибка при работе с SQLite change_karma, {error}")
         finally:
             self.conn.commit()

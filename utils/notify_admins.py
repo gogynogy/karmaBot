@@ -1,12 +1,10 @@
-import logging
-
-from aiogram import Dispatcher
-
 from data.config import admins
+from loader import bot
 
-async def on_start_up_notify(dp: Dispatcher):
+async def write_admin(message):
     for admin in admins:
-        try:
-            await dp.bot.send_message(admin, "бот запущен")
-        except Exception as ex:
-            logging.exception(ex)
+        await bot.send_message(admin, message)
+
+async def on_start_up_notify():
+    for admin in admins:
+        await bot.send_message(admin, "бот запущен")
